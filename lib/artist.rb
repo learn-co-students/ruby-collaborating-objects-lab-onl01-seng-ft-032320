@@ -6,17 +6,19 @@ class Artist
   def initialize(name)
     @name = name 
     @@all << self
-    @songs = [] ## goes here cause a artist can hold many songs so an instance of Artist can hold many instances of songs
+    #@songs = [] ## goes here cause a artist can hold many songs so an instance of Artist can hold many instances of songs
   end 
   
   def self.all 
     @@all 
   end 
   
+  def songs
+    Song.all.select { |song| song.artist == self}
+  end 
   
   def add_song(song)
     song.artist = self
-    @songs << song
   end 
   
   def self.find_or_create_by_name(name)
@@ -26,7 +28,6 @@ class Artist
         found_artist
     else 
         new_artist = self.new(name)
-        @@all << self 
         new_artist
     end
   end 
@@ -35,7 +36,4 @@ class Artist
     self.songs.each { |song| puts song.name}
   end 
 
-  
-  
-  
 end 
